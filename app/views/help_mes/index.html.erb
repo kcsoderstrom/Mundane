@@ -1,0 +1,38 @@
+<h1>Panicking Students</h1>
+
+<table>
+<% HelpMe.all.each do |halp| %>
+  <% next if halp.resolved %>
+  <tr>
+    <td>
+      <form action="<%= help_me_resolve_url(halp.id) %>"
+            method="post">
+        <input type="hidden" value="PATCH" name="_method">
+        <input type="submit" value="Resolve">
+      </form>
+    </td>
+    <td>
+    <% if halp.claimed %>
+      CLAIMED
+    <% else %>
+      <form action="<%= help_me_claim_url(halp.id) %>"
+            method="post">
+        <input type="hidden" value="PATCH" name="_method">
+        <input type="submit" value="Claim">
+      </form>
+    <% end %>
+    </td>
+    <td>
+      <%= halp %>
+    </td>
+  </tr>
+<% end %>
+
+</table>
+
+<form action="<%= update_table_url %>"
+      method="post">
+  <input id="updatin" type="submit" value="Update">
+</form>
+
+<script>setInterval(function () {document.getElementById("updatin").click();}, 10000)</script>
